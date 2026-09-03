@@ -3,7 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>카브릿지</title>
+  <title>카브릿지 — 보고 있는 중고차, 살 수 있는 방법으로</title>
+  <meta name="description" content="엔카·케이카·KB차차차 어디서 봤든 차량 링크만 보내주세요. 카브릿지가 제휴 캐피탈사의 리스·렌트·할부 조건을 확인해 상담으로 연결해드립니다.">
+  <link rel="canonical" href="https://carbridge-seven.vercel.app/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://carbridge-seven.vercel.app/">
+  <meta property="og:site_name" content="카브릿지">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:title" content="5년 된 차가 오래된 차라는 생각, 오래됐습니다">
+  <meta property="og:description" content="보고 있는 중고차 링크만 보내주세요. 이용 가능한 리스·렌트·할부 조건을 확인해드립니다.">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231E3A52'/%3E%3Cpath d='M16 41h32M16 41c0-9 7-16 16-16s16 7 16 16' stroke='%23C17A34' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@500;600;700&family=Gothic+A1:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -70,6 +80,10 @@
       font-family: 'Gothic A1', 'Malgun Gothic', sans-serif;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
+      /* 한글은 단어 중간에서 줄이 갈리면 안 된다 — 기본값이면 모바일에서
+         "원 / 하는 중고차로"처럼 잘린다. */
+      word-break: keep-all;
+      overflow-wrap: break-word;
     }
 
     a { color: var(--primary); }
@@ -102,7 +116,7 @@
     }
     .nav a.cta-small:hover { border-color: var(--accent); color: var(--accent-strong); }
 
-    .hero { padding: 48px 0 40px; }
+    .hero { padding: 44px 0 36px; }
     .hero .eyebrow {
       font-size: 13px;
       font-weight: 700;
@@ -113,23 +127,58 @@
     .hero h1 {
       font-family: 'Hahmlet', serif;
       font-weight: 600;
-      font-size: clamp(32px, 6vw, 44px);
-      line-height: 1.25;
+      font-size: clamp(30px, 5.6vw, 42px);
+      line-height: 1.28;
       margin: 0 0 18px;
       color: var(--primary-strong);
       text-wrap: balance;
     }
     .hero p.sub {
-      font-size: 17px;
+      font-size: 16.5px;
       color: var(--text-muted);
-      max-width: 46ch;
-      margin: 0 0 28px;
+      max-width: 44ch;
+      margin: 0 0 26px;
     }
-    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    /* 히어로 안의 링크 입력 — 이 사이트의 단 하나의 핵심 행동이라
+       스크롤 없이 첫 화면에서 바로 보이게 둔다. */
+    .linkbox {
+      background: var(--surface);
+      border: 1.5px solid var(--line);
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+    .linkbox label {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .linkbox .row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .linkbox input {
+      flex: 1 1 240px;
+      min-width: 0;
+      font-family: 'Gothic A1', sans-serif;
+      font-size: 15px;
+      padding: 13px 14px;
+      border-radius: 10px;
+      border: 1.5px solid var(--line);
+      background: var(--bg);
+      color: var(--text);
+    }
+    .linkbox input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+    .linkbox .hint { font-size: 12.5px; color: var(--text-muted); margin: 10px 0 0; }
 
     .btn {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 8px;
       font-family: 'Gothic A1', sans-serif;
       font-weight: 700;
@@ -144,17 +193,41 @@
     .btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
     .btn-primary { background: var(--accent); color: #FFF8EE; box-shadow: var(--shadow); }
     .btn-primary:hover { background: var(--accent-strong); transform: translateY(-1px); }
-    .btn-ghost { background: transparent; color: var(--primary-strong); border: 1.5px solid var(--line); }
-    .btn-ghost:hover { border-color: var(--primary); }
 
-    .steps-section { padding: 44px 0; border-top: 1px solid var(--line); }
+    section.block { padding: 44px 0; border-top: 1px solid var(--line); }
     .section-title {
       font-family: 'Hahmlet', serif;
       font-weight: 600;
       font-size: 24px;
+      line-height: 1.35;
       color: var(--primary-strong);
-      margin: 0 0 28px;
+      margin: 0 0 14px;
+      text-wrap: balance;
     }
+    .section-lede { color: var(--text-muted); margin: 0 0 26px; max-width: 50ch; }
+
+    /* 근거 수치 — 출처를 함께 적어야 주장이 아니라 근거가 된다 */
+    .facts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 0 0 16px; }
+    @media (max-width: 480px) { .facts { grid-template-columns: 1fr; } }
+    .fact {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 16px 18px;
+    }
+    .fact .big {
+      font-family: 'Hahmlet', serif;
+      font-weight: 700;
+      font-size: 26px;
+      color: var(--accent-strong);
+      line-height: 1.2;
+      display: block;
+      font-variant-numeric: tabular-nums;
+    }
+    .fact .cap { font-size: 13px; color: var(--text-muted); margin-top: 4px; display: block; }
+    .src { font-size: 12px; color: var(--text-muted); margin: 0; line-height: 1.65; }
+    .src a { color: var(--text-muted); }
+
     .steps { display: flex; flex-direction: column; gap: 0; }
     .step {
       display: grid;
@@ -173,7 +246,22 @@
     .step h3 { margin: 0 0 4px; font-size: 16px; font-weight: 700; }
     .step p { margin: 0; color: var(--text-muted); font-size: 14.5px; max-width: 48ch; }
 
-    .why-section { padding: 44px 0; border-top: 1px solid var(--line); }
+    /* 확인 체크리스트 — 카브릿지가 보증하지 않는 영역을 정직하게 안내한다 */
+    .checks { display: grid; gap: 10px; margin: 0 0 18px; }
+    .check {
+      display: grid;
+      grid-template-columns: 22px 1fr;
+      gap: 12px;
+      align-items: start;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+    .check .tick { color: var(--accent); font-weight: 900; font-size: 15px; line-height: 1.5; }
+    .check b { font-size: 14.5px; display: block; margin-bottom: 2px; }
+    .check span.d { font-size: 13.5px; color: var(--text-muted); }
+
     .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
     @media (max-width: 560px) { .why-grid { grid-template-columns: 1fr; } }
     .why-card {
@@ -187,8 +275,6 @@
     .why-card h4 { margin: 0 0 6px; font-size: 15px; font-weight: 700; color: var(--primary-strong); }
     .why-card p { margin: 0; font-size: 13.5px; color: var(--text-muted); }
 
-    .form-section { padding: 48px 0 56px; border-top: 1px solid var(--line); }
-    .form-section p.lede { color: var(--text-muted); margin: 0 0 28px; max-width: 50ch; }
     form { display: flex; flex-direction: column; gap: 18px; }
     .field { display: flex; flex-direction: column; gap: 6px; }
     .field label { font-size: 13.5px; font-weight: 700; color: var(--text); }
@@ -208,21 +294,40 @@
       border-color: var(--accent);
       box-shadow: 0 0 0 3px var(--accent-soft);
     }
-    .field textarea { min-height: 96px; }
+    .field textarea { min-height: 88px; }
     .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
     @media (max-width: 480px) { .row-2 { grid-template-columns: 1fr; } }
-    .form-foot {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
-      margin-top: 6px;
+
+    /* 동의 — 개인정보 수집·이용과 제3자(제휴 금융사) 제공은 반드시 별도 항목이어야 한다 */
+    .consent {
+      background: var(--surface-alt);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 16px;
+      display: grid;
+      gap: 14px;
     }
-    .form-note { font-size: 12.5px; color: var(--text-muted); max-width: 32ch; }
+    .consent .c-row { display: grid; grid-template-columns: 20px 1fr; gap: 10px; align-items: start; }
+    .consent input[type="checkbox"] { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--accent); }
+    .consent label { font-size: 13.5px; font-weight: 700; cursor: pointer; }
+    .consent .detail { font-size: 12.5px; color: var(--text-muted); margin: 4px 0 0; line-height: 1.6; }
+    .consent .req { color: var(--accent-strong); }
+
+    .form-foot { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 2px; }
     #status { font-size: 13.5px; font-weight: 700; min-height: 18px; }
     #status.error { color: var(--accent-strong); }
     #status.ok { color: var(--primary); }
+
+    /* 법적 고지 — 오해 소지를 없애는 것이 리드 품질에도 이롭다 */
+    .notice {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 18px 20px;
+    }
+    .notice ul { margin: 0; padding-left: 18px; }
+    .notice li { font-size: 13.5px; color: var(--text-muted); margin-bottom: 8px; line-height: 1.65; }
+    .notice li:last-child { margin-bottom: 0; }
 
     footer {
       padding: 28px 0 60px;
@@ -241,63 +346,144 @@
   <div class="shell">
     <div class="nav">
       <span class="wordmark">카브릿지</span>
-      <a class="cta-small" href="#inquiry">상담 신청</a>
+      <a class="cta-small" href="#inquiry">조건 확인하기</a>
     </div>
 
     <section class="hero">
-      <p class="eyebrow">중고차 리스·렌트 1:1 상담</p>
-      <h1>목돈 없이, 원하는 중고차로<br>시작하세요</h1>
-      <p class="sub">카브릿지는 재고를 쌓아두지 않습니다. 원하시는 차량과 예산, 목적만 알려주시면 리스·렌트로 가능한 방법을 담당자가 직접 찾아 상담해드립니다.</p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="#inquiry">지금 상담 신청하기</a>
-        <a class="btn btn-ghost" href="#how">진행 방식 보기</a>
+      <p class="eyebrow">중고차 금융 연결 서비스</p>
+      <h1>5년 된 차가 오래된 차라는 생각, 오래됐습니다</h1>
+      <p class="sub">
+        자동차의 수명은 길어졌고, 가장 큰 초기 감가는 이미 지나갔습니다.
+        카브릿지는 지금 보고 계신 중고차를 이용 가능한 금융 조건으로 연결해드립니다.
+      </p>
+
+      <div class="linkbox">
+        <label for="hero-link">보고 계신 차량의 링크를 붙여넣으세요</label>
+        <div class="row">
+          <input id="hero-link" type="url" inputmode="url"
+                 placeholder="엔카·케이카·KB차차차·딜러 매물 링크"
+                 aria-describedby="hero-hint">
+          <button type="button" class="btn btn-primary" id="hero-go">가능 조건 확인하기</button>
+        </div>
+        <p class="hint" id="hero-hint">
+          링크가 없어도 괜찮습니다. 차종과 예산만으로도 상담이 가능합니다.
+        </p>
       </div>
     </section>
 
-    <section class="steps-section" id="how">
+    <section class="block" id="why">
+      <h2 class="section-title">수명은 길어졌는데, 첫 감가는 왜 전부 부담해야 할까요?</h2>
+      <p class="section-lede">
+        중고차는 수명을 포기하는 선택이 아닙니다. 가장 큰 초기 감가를 건너뛰는 선택입니다.
+      </p>
+
+      <div class="facts">
+        <div class="fact">
+          <span class="big">16.4년</span>
+          <span class="cap">2020년 기준 국내 자동차 평균 폐차 주기</span>
+        </div>
+        <div class="fact">
+          <span class="big">8.3년 → 16년</span>
+          <span class="cap">2000년 대비 2021년, 약 두 배로 늘어난 사용 기간</span>
+        </div>
+      </div>
+      <p class="src">
+        출처: 한국자동차해체재활용업협회 집계 —
+        <a href="https://www.fnnews.com/news/202202052144182826" target="_blank" rel="noopener">파이낸셜뉴스(2022)</a>,
+        <a href="https://www.newspim.com/news/view/20210113000910" target="_blank" rel="noopener">뉴스핌(2021)</a>.
+        2021년 기준 승용차 평균 폐차 주기는 15.6년입니다.
+      </p>
+
+      <p class="section-lede" style="margin-top:20px; margin-bottom:0">
+        폐차 주기는 차량이 실제로 도로 위에 머무는 기간입니다.
+        3~5년 된 차량이라면 남은 사용 가능 기간이 아직 길게 남아 있을 수 있다는 뜻입니다.
+        신차와 중고차의 <b>사용 가치</b> 차이는 예전보다 줄었습니다.
+        이제 중요한 것은 새 차인지가 아니라, <b>이 차의 상태와 남은 수명</b>입니다.
+      </p>
+    </section>
+
+    <section class="block" id="trust">
+      <h2 class="section-title">연식보다 중요한 것은 상태입니다</h2>
+      <p class="section-lede">
+        중고차 구매를 망설이게 하는 건 가격이 아니라 불신입니다.
+        허위매물, 조작된 성능점검기록부, 확인되지 않은 사고 이력은 실제로 존재하는 위험입니다.
+        그래서 아래 항목은 계약 전에 반드시 직접 확인하셔야 합니다.
+      </p>
+
+      <div class="checks">
+        <div class="check"><span class="tick">✓</span><div>
+          <b>사고 및 보험 이력</b>
+          <span class="d">보험개발원 카히스토리에서 조회할 수 있습니다. 판매자 설명과 대조해보세요.</span>
+        </div></div>
+        <div class="check"><span class="tick">✓</span><div>
+          <b>성능·상태 점검기록부</b>
+          <span class="d">육안 검사 기반이라 한계가 있습니다. 기록부와 실제 차량이 일치하는지 확인하세요.</span>
+        </div></div>
+        <div class="check"><span class="tick">✓</span><div>
+          <b>주행거리와 정비 이력</b>
+          <span class="d">연식보다 주행거리와 소모품 교체 상태가 남은 수명을 더 정확히 말해줍니다.</span>
+        </div></div>
+        <div class="check"><span class="tick">✓</span><div>
+          <b>보증 여부</b>
+          <span class="d">제조사 보증 잔여 기간이나 판매처 자체 보증이 있는지 확인하세요.</span>
+        </div></div>
+        <div class="check"><span class="tick">✓</span><div>
+          <b>침수 및 용도 이력</b>
+          <span class="d">렌터카·리스 이력과 침수 여부는 시세와 이후 재매각에 큰 영향을 줍니다.</span>
+        </div></div>
+      </div>
+
+      <div class="notice">
+        <ul>
+          <li><b>카브릿지는 차량을 직접 진단하거나 보증하지 않습니다.</b> 차량 상태와 가격은 해당 판매자와 전문 진단 정보를 통해 확인하셔야 합니다.</li>
+          <li>다만 상담 과정에서 위 항목 중 확인이 필요한 부분을 함께 짚어드립니다.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="block" id="how">
       <h2 class="section-title">진행은 이렇게 됩니다</h2>
       <div class="steps">
         <div class="step">
           <span class="n">1</span>
-          <div><h3>문의 남기기</h3><p>원하시는 차량 링크, 사진, 혹은 그냥 글로 설명만 주셔도 됩니다. 예산과 용도만 있어도 충분합니다.</p></div>
+          <div><h3>차량 링크 보내기</h3><p>엔카·케이카·KB차차차·딜러 매물 어디서 보셨든 상관없습니다. 링크가 없으면 차종과 예산만 적어주셔도 됩니다.</p></div>
         </div>
         <div class="step">
           <span class="n">2</span>
-          <div><h3>1:1 상담</h3><p>담당자가 내용을 확인하고 직접 연락드려 상황에 맞는 리스·렌트 방법을 함께 찾습니다.</p></div>
+          <div><h3>조건 정리</h3><p>희망하시는 월 예산과 이용 목적(개인·개인사업자·법인)을 확인해 심사에 필요한 형태로 정리합니다.</p></div>
         </div>
         <div class="step">
           <span class="n">3</span>
-          <div><h3>맞춤 조건 제안</h3><p>월 납입금, 계약 기간, 초기비용을 비교해드리고 결정은 전적으로 고객님이 하십니다.</p></div>
+          <div><h3>제휴 금융사 심사</h3><p>제휴 캐피탈사가 한도와 가능한 조건을 심사합니다. 승인 여부와 금리는 금융사 심사 결과에 따라 결정됩니다.</p></div>
+        </div>
+        <div class="step">
+          <span class="n">4</span>
+          <div><h3>상담 및 계약 연결</h3><p>가능한 조건을 비교해 안내드리고 계약 과정을 연결해드립니다. 결정은 전적으로 고객님이 하십니다.</p></div>
         </div>
       </div>
     </section>
 
-    <section class="why-section">
+    <section class="block">
       <h2 class="section-title">이런 점이 다릅니다</h2>
       <div class="why-grid">
-        <div class="why-card"><span class="mark">🚗</span><h4>차종 제한 없음</h4><p>특정 브랜드 인증중고차만 되는 기존 상품과 달리, 원하시는 차량 기준으로 상담합니다.</p></div>
-        <div class="why-card"><span class="mark">💳</span><h4>초기비용 최소화</h4><p>일시불·할부 대신 리스·렌트 구조로 목돈 부담을 줄이는 방법을 함께 찾습니다.</p></div>
-        <div class="why-card"><span class="mark">🧑‍💼</span><h4>사람이 직접 상담</h4><p>자동 견적이 아니라, 한 건 한 건 담당자가 직접 검토하고 연락드립니다.</p></div>
+        <div class="why-card"><span class="mark">🔗</span><h4>어디서 본 차량이든</h4><p>카브릿지에서 다시 검색하실 필요 없습니다. 이미 보고 계신 매물 링크 그대로 가져오시면 됩니다.</p></div>
+        <div class="why-card"><span class="mark">💳</span><h4>초기 목돈 부담 완화</h4><p>일시불·할부 외에 리스·렌트까지 포함해 월 단위로 관리 가능한 구조를 함께 찾습니다.</p></div>
+        <div class="why-card"><span class="mark">🧑‍💼</span><h4>사람이 직접 상담</h4><p>자동 견적이 아니라 담당자가 한 건씩 검토하고 연락드립니다.</p></div>
       </div>
     </section>
 
-    <section class="form-section" id="inquiry">
-      <h2 class="section-title">상담 신청</h2>
-      <p class="lede">아래 내용을 채워주시면 이메일로 문의가 접수됩니다. 원하시는 차량은 링크·사진·글 어떤 형태든 좋고, 없으면 예산과 목적만 적어주셔도 됩니다.</p>
+    <section class="block" id="inquiry">
+      <h2 class="section-title">보고 있는 차가 있다면, 구매 방법부터 확인해보세요</h2>
+      <p class="section-lede">
+        아래 내용만 남겨주시면 담당자가 확인 후 연락드립니다.
+        소득·신용점수 같은 민감한 정보는 이 단계에서 받지 않습니다.
+      </p>
+
       <form id="inquiry-form" novalidate>
-        <div class="row-2">
-          <div class="field">
-            <label for="name">이름 *</label>
-            <input id="name" name="name" type="text" autocomplete="name" required>
-          </div>
-          <div class="field">
-            <label for="contact">연락처 *</label>
-            <input id="contact" name="contact" type="text" placeholder="전화번호 또는 이메일" required>
-          </div>
-        </div>
         <div class="field">
-          <label for="car">원하시는 차량 <span class="hint">(선택 — 링크, 차종, 연식 등 무엇이든)</span></label>
-          <input id="car" name="car" type="text" placeholder="예: encar.com/... 링크 / 그랜저 2022년식 / 아직 안 정함">
+          <label for="car">보고 계신 차량 <span class="hint">(링크 또는 차종·연식)</span></label>
+          <input id="car" name="car" type="text"
+                 placeholder="예: encar.com/... 링크 / 그랜저 2022년식 / 아직 못 정했어요">
         </div>
         <div class="row-2">
           <div class="field">
@@ -305,61 +491,178 @@
             <input id="budget" name="budget" type="text" placeholder="예: 월 40만원대 / 총 2,500만원 이하">
           </div>
           <div class="field">
-            <label for="purpose">용도 <span class="hint">(선택)</span></label>
-            <input id="purpose" name="purpose" type="text" placeholder="예: 개인용 / 법인·사업용">
+            <label for="purpose">이용 구분</label>
+            <select id="purpose" name="purpose">
+              <option value="개인">개인</option>
+              <option value="개인사업자">개인사업자</option>
+              <option value="법인">법인</option>
+              <option value="아직 미정">아직 미정</option>
+            </select>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="field">
+            <label for="name">이름 *</label>
+            <input id="name" name="name" type="text" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="contact">연락처 *</label>
+            <input id="contact" name="contact" type="text" inputmode="tel"
+                   placeholder="전화번호 또는 이메일" autocomplete="tel" required>
           </div>
         </div>
         <div class="field">
           <label for="message">하고 싶은 말 <span class="hint">(선택)</span></label>
           <textarea id="message" name="message" placeholder="편하게 상황을 적어주세요."></textarea>
         </div>
+
+        <div class="consent">
+          <div class="c-row">
+            <input type="checkbox" id="agree-privacy">
+            <div>
+              <label for="agree-privacy"><span class="req">[필수]</span> 개인정보 수집·이용 동의</label>
+              <p class="detail">
+                수집 항목: 이름, 연락처, 희망 차량·예산·이용 구분, 문의 내용 ·
+                이용 목적: 상담 진행 및 금융 조건 안내 ·
+                보유 기간: 상담 종료 후 1년.
+                동의를 거부하실 수 있으나, 이 경우 상담 진행이 어렵습니다.
+              </p>
+            </div>
+          </div>
+          <div class="c-row">
+            <input type="checkbox" id="agree-third">
+            <div>
+              <label for="agree-third"><span class="req">[필수]</span> 제3자 제공 동의</label>
+              <p class="detail">
+                제공받는 자: 카브릿지 제휴 여신전문금융회사(캐피탈사) ·
+                제공 항목: 이름, 연락처, 희망 차량 및 조건 ·
+                제공 목적: 리스·렌트·할부 한도 및 승인 심사 ·
+                보유 기간: 심사 종료 후 관계 법령이 정한 기간.
+              </p>
+            </div>
+          </div>
+        </div>
+
         <div class="form-foot">
-          <button type="submit" class="btn btn-primary">상담 요청 보내기</button>
+          <button type="submit" class="btn btn-primary">조건 확인 요청하기</button>
           <span id="status" role="status" aria-live="polite"></span>
         </div>
-        <p class="form-note">전송 시 이메일 앱이 열리며, 보내기를 눌러야 실제로 접수됩니다.</p>
       </form>
+    </section>
+
+    <section class="block">
+      <h2 class="section-title">시작하기 전에 알아두실 점</h2>
+      <div class="notice">
+        <ul>
+          <li>카브릿지는 <b>중고차 판매자가 아니며</b>, 차량을 직접 보유하거나 판매하지 않습니다. 고객님이 발견하신 차량을 금융 조건으로 연결하는 상담 서비스입니다.</li>
+          <li>실제 금융 조건과 한도, 금리, 승인 여부는 <b>제휴 금융사의 심사 결과</b>에 따라 결정됩니다. 카브릿지는 특정 금리나 한도, 승인을 보장하지 않습니다.</li>
+          <li>차량 가격과 상태는 <b>해당 판매자 및 전문 진단 정보</b>를 통해 직접 확인하셔야 합니다.</li>
+          <li>수집된 개인정보가 어떤 제휴사에 어떤 목적으로 제공되는지는 상담 신청의 동의 항목에 안내되어 있습니다.</li>
+        </ul>
+      </div>
     </section>
 
     <footer>
       <span class="brand">카브릿지</span>
-      <span>이메일로 바로 문의하시려면 <a href="mailto:koready716@gmail.com">koready716@gmail.com</a></span>
+      <span>문의: <a href="mailto:koready716@gmail.com">koready716@gmail.com</a></span>
       <span>카카오톡 채널 상담은 준비 중입니다.</span>
+      <!-- TODO(대표님 확인): 통신판매업 신고 시 상호·대표자·사업자등록번호·주소·연락처
+           표기 의무가 있습니다. 실제 사업자 정보를 받으면 이 자리에 채웁니다.
+           확인 전까지는 잘못된 정보를 노출하지 않도록 비워둡니다. -->
     </footer>
   </div>
 
   <script>
     (function () {
+      'use strict';
+
+      /* 리드 수집 엔드포인트.
+         비워두면 메일 앱을 여는 기존 방식으로 동작한다(현재 상태).
+         ⚠ mailto 방식은 리드가 실제로 수집되지 않는다 — 고객이 메일 앱에서
+         '보내기'를 한 번 더 눌러야 하고, 모바일에 메일 앱이 설정돼 있지 않으면
+         그대로 이탈한다. Formspree·Google Apps Script 등 수신 URL을 여기에
+         넣으면 즉시 서버 전송 방식으로 바뀐다(아래 코드는 이미 대응돼 있다). */
+      var LEAD_ENDPOINT = '';
+      var MAIL_TO = 'koready716@gmail.com';
+
       var form = document.getElementById('inquiry-form');
       var status = document.getElementById('status');
 
+      /* 히어로의 링크 입력 → 상담 폼으로 값을 넘기고 스크롤.
+         고객이 같은 정보를 두 번 입력하지 않게 한다. */
+      var heroInput = document.getElementById('hero-link');
+      document.getElementById('hero-go').addEventListener('click', function () {
+        var v = heroInput.value.trim();
+        if (v) document.getElementById('car').value = v;
+        document.getElementById('inquiry').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        var next = v ? document.getElementById('name') : document.getElementById('car');
+        next.focus({ preventScroll: true });
+      });
+      heroInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') { e.preventDefault(); document.getElementById('hero-go').click(); }
+      });
+
       form.addEventListener('submit', function (event) {
         event.preventDefault();
-        var name = form.name.value.trim();
-        var contact = form.contact.value.trim();
 
-        if (!name || !contact) {
+        var d = {
+          car: form.car.value.trim(),
+          budget: form.budget.value.trim(),
+          purpose: form.purpose.value,
+          name: form.name.value.trim(),
+          contact: form.contact.value.trim(),
+          message: form.message.value.trim()
+        };
+
+        if (!d.name || !d.contact) {
           status.textContent = '이름과 연락처는 꼭 입력해주세요.';
+          status.className = 'error';
+          (d.name ? form.contact : form.name).focus();
+          return;
+        }
+        if (!document.getElementById('agree-privacy').checked ||
+            !document.getElementById('agree-third').checked) {
+          status.textContent = '상담 진행을 위해 필수 동의 항목에 체크해주세요.';
           status.className = 'error';
           return;
         }
 
+        if (LEAD_ENDPOINT) {
+          status.textContent = '보내는 중입니다...';
+          status.className = 'ok';
+          fetch(LEAD_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(d)
+          }).then(function (r) {
+            if (!r.ok) throw new Error('bad status');
+            form.reset();
+            status.textContent = '접수되었습니다. 담당자가 곧 연락드리겠습니다.';
+            status.className = 'ok';
+          }).catch(function () {
+            status.textContent = '전송에 실패했습니다. 이메일로 보내주시면 바로 확인하겠습니다.';
+            status.className = 'error';
+          });
+          return;
+        }
+
         var lines = [
-          '이름: ' + name,
-          '연락처: ' + contact,
-          '원하시는 차량: ' + (form.car.value.trim() || '(미입력)'),
-          '예산: ' + (form.budget.value.trim() || '(미입력)'),
-          '용도: ' + (form.purpose.value.trim() || '(미입력)'),
+          '보고 계신 차량: ' + (d.car || '(미입력)'),
+          '예산: ' + (d.budget || '(미입력)'),
+          '이용 구분: ' + d.purpose,
+          '이름: ' + d.name,
+          '연락처: ' + d.contact,
           '',
           '하고 싶은 말:',
-          form.message.value.trim() || '(없음)'
+          d.message || '(없음)',
+          '',
+          '[동의] 개인정보 수집·이용, 제3자(제휴 금융사) 제공에 모두 동의함'
         ];
+        var mailto = 'mailto:' + MAIL_TO +
+          '?subject=' + encodeURIComponent('[카브릿지 상담문의] ' + d.name) +
+          '&body=' + encodeURIComponent(lines.join('\n'));
 
-        var subject = encodeURIComponent('[카브릿지 상담문의] ' + name);
-        var body = encodeURIComponent(lines.join('\n'));
-        var mailto = 'mailto:koready716@gmail.com?subject=' + subject + '&body=' + body;
-
-        status.textContent = '이메일 앱을 여는 중입니다...';
+        status.textContent = '이메일 앱을 여는 중입니다. 열린 화면에서 보내기를 눌러주세요.';
         status.className = 'ok';
         window.location.href = mailto;
       });
@@ -367,4 +670,3 @@
   </script>
 </body>
 </html>
-
