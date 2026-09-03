@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>카브릿지</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@500;600;700&family=Gothic+A1:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #F5F2EC;
+      --surface: #FFFFFF;
+      --surface-alt: #EAE4D8;
+      --line: #DCD4C4;
+      --text: #211D18;
+      --text-muted: #6B6355;
+      --primary: #1E3A52;
+      --primary-strong: #12283C;
+      --accent: #C17A34;
+      --accent-strong: #A5631F;
+      --accent-soft: #F0E1CC;
+      --shadow: 0 1px 2px rgba(30,20,10,0.05), 0 12px 32px -16px rgba(30,20,10,0.18);
+      --focus: #1E3A52;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #191510;
+        --surface: #221D16;
+        --surface-alt: #2A2419;
+        --line: #3A3225;
+        --text: #F1ECE2;
+        --text-muted: #B3A891;
+        --primary: #8FB2CE;
+        --primary-strong: #C4DCEC;
+        --accent: #E0A15A;
+        --accent-strong: #F0BC80;
+        --accent-soft: #3B2E1B;
+        --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 12px 32px -16px rgba(0,0,0,0.6);
+        --focus: #E0A15A;
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --bg: #191510;
+      --surface: #221D16;
+      --surface-alt: #2A2419;
+      --line: #3A3225;
+      --text: #F1ECE2;
+      --text-muted: #B3A891;
+      --primary: #8FB2CE;
+      --primary-strong: #C4DCEC;
+      --accent: #E0A15A;
+      --accent-strong: #F0BC80;
+      --accent-soft: #3B2E1B;
+      --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 12px 32px -16px rgba(0,0,0,0.6);
+      --focus: #E0A15A;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Gothic A1', 'Malgun Gothic', sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--primary); }
+    :root[data-theme="dark"] a, :root:not([data-theme="light"]) a { color: var(--primary-strong); }
+    .shell { max-width: 640px; margin: 0 auto; padding: 0 24px; }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 0;
+    }
+    .wordmark {
+      font-family: 'Hahmlet', serif;
+      font-weight: 700;
+      font-size: 20px;
+      color: var(--primary-strong);
+      letter-spacing: -0.01em;
+    }
+    .nav a.cta-small {
+      font-family: 'Gothic A1', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--primary-strong);
+      text-decoration: none;
+      border: 1.5px solid var(--line);
+      padding: 8px 16px;
+      border-radius: 999px;
+      transition: border-color 0.15s ease, color 0.15s ease;
+    }
+    .nav a.cta-small:hover { border-color: var(--accent); color: var(--accent-strong); }
+
+    .hero { padding: 48px 0 40px; }
+    .hero .eyebrow {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--accent-strong);
+      margin: 0 0 14px;
+    }
+    .hero h1 {
+      font-family: 'Hahmlet', serif;
+      font-weight: 600;
+      font-size: clamp(32px, 6vw, 44px);
+      line-height: 1.25;
+      margin: 0 0 18px;
+      color: var(--primary-strong);
+      text-wrap: balance;
+    }
+    .hero p.sub {
+      font-size: 17px;
+      color: var(--text-muted);
+      max-width: 46ch;
+      margin: 0 0 28px;
+    }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Gothic A1', sans-serif;
+      font-weight: 700;
+      font-size: 15.5px;
+      padding: 13px 24px;
+      border-radius: 10px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+    }
+    .btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+    .btn-primary { background: var(--accent); color: #FFF8EE; box-shadow: var(--shadow); }
+    .btn-primary:hover { background: var(--accent-strong); transform: translateY(-1px); }
+    .btn-ghost { background: transparent; color: var(--primary-strong); border: 1.5px solid var(--line); }
+    .btn-ghost:hover { border-color: var(--primary); }
+
+    .steps-section { padding: 44px 0; border-top: 1px solid var(--line); }
+    .section-title {
+      font-family: 'Hahmlet', serif;
+      font-weight: 600;
+      font-size: 24px;
+      color: var(--primary-strong);
+      margin: 0 0 28px;
+    }
+    .steps { display: flex; flex-direction: column; gap: 0; }
+    .step {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 16px;
+      padding: 18px 0;
+      border-bottom: 1px dashed var(--line);
+    }
+    .step:last-child { border-bottom: none; }
+    .step .n {
+      font-family: 'Hahmlet', serif;
+      font-weight: 600;
+      font-size: 20px;
+      color: var(--accent);
+    }
+    .step h3 { margin: 0 0 4px; font-size: 16px; font-weight: 700; }
+    .step p { margin: 0; color: var(--text-muted); font-size: 14.5px; max-width: 48ch; }
+
+    .why-section { padding: 44px 0; border-top: 1px solid var(--line); }
+    .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    @media (max-width: 560px) { .why-grid { grid-template-columns: 1fr; } }
+    .why-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 20px 18px;
+      box-shadow: var(--shadow);
+    }
+    .why-card .mark { font-size: 22px; margin-bottom: 10px; display: block; }
+    .why-card h4 { margin: 0 0 6px; font-size: 15px; font-weight: 700; color: var(--primary-strong); }
+    .why-card p { margin: 0; font-size: 13.5px; color: var(--text-muted); }
+
+    .form-section { padding: 48px 0 56px; border-top: 1px solid var(--line); }
+    .form-section p.lede { color: var(--text-muted); margin: 0 0 28px; max-width: 50ch; }
+    form { display: flex; flex-direction: column; gap: 18px; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field label { font-size: 13.5px; font-weight: 700; color: var(--text); }
+    .field .hint { font-size: 12.5px; color: var(--text-muted); font-weight: 400; }
+    .field input, .field textarea, .field select {
+      font-family: 'Gothic A1', sans-serif;
+      font-size: 15px;
+      padding: 12px 14px;
+      border-radius: 8px;
+      border: 1.5px solid var(--line);
+      background: var(--surface);
+      color: var(--text);
+      resize: vertical;
+    }
+    .field input:focus, .field textarea:focus, .field select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+    .field textarea { min-height: 96px; }
+    .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 480px) { .row-2 { grid-template-columns: 1fr; } }
+    .form-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+    .form-note { font-size: 12.5px; color: var(--text-muted); max-width: 32ch; }
+    #status { font-size: 13.5px; font-weight: 700; min-height: 18px; }
+    #status.error { color: var(--accent-strong); }
+    #status.ok { color: var(--primary); }
+
+    footer {
+      padding: 28px 0 60px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    footer a { color: var(--text-muted); text-decoration: underline; text-underline-offset: 2px; }
+    footer .brand { font-family: 'Hahmlet', serif; font-weight: 600; color: var(--primary-strong); font-size: 14.5px; }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="nav">
+      <span class="wordmark">카브릿지</span>
+      <a class="cta-small" href="#inquiry">상담 신청</a>
+    </div>
+
+    <section class="hero">
+      <p class="eyebrow">중고차 리스·렌트 1:1 상담</p>
+      <h1>목돈 없이, 원하는 중고차로<br>시작하세요</h1>
+      <p class="sub">카브릿지는 재고를 쌓아두지 않습니다. 원하시는 차량과 예산, 목적만 알려주시면 리스·렌트로 가능한 방법을 담당자가 직접 찾아 상담해드립니다.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#inquiry">지금 상담 신청하기</a>
+        <a class="btn btn-ghost" href="#how">진행 방식 보기</a>
+      </div>
+    </section>
+
+    <section class="steps-section" id="how">
+      <h2 class="section-title">진행은 이렇게 됩니다</h2>
+      <div class="steps">
+        <div class="step">
+          <span class="n">1</span>
+          <div><h3>문의 남기기</h3><p>원하시는 차량 링크, 사진, 혹은 그냥 글로 설명만 주셔도 됩니다. 예산과 용도만 있어도 충분합니다.</p></div>
+        </div>
+        <div class="step">
+          <span class="n">2</span>
+          <div><h3>1:1 상담</h3><p>담당자가 내용을 확인하고 직접 연락드려 상황에 맞는 리스·렌트 방법을 함께 찾습니다.</p></div>
+        </div>
+        <div class="step">
+          <span class="n">3</span>
+          <div><h3>맞춤 조건 제안</h3><p>월 납입금, 계약 기간, 초기비용을 비교해드리고 결정은 전적으로 고객님이 하십니다.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="why-section">
+      <h2 class="section-title">이런 점이 다릅니다</h2>
+      <div class="why-grid">
+        <div class="why-card"><span class="mark">🚗</span><h4>차종 제한 없음</h4><p>특정 브랜드 인증중고차만 되는 기존 상품과 달리, 원하시는 차량 기준으로 상담합니다.</p></div>
+        <div class="why-card"><span class="mark">💳</span><h4>초기비용 최소화</h4><p>일시불·할부 대신 리스·렌트 구조로 목돈 부담을 줄이는 방법을 함께 찾습니다.</p></div>
+        <div class="why-card"><span class="mark">🧑‍💼</span><h4>사람이 직접 상담</h4><p>자동 견적이 아니라, 한 건 한 건 담당자가 직접 검토하고 연락드립니다.</p></div>
+      </div>
+    </section>
+
+    <section class="form-section" id="inquiry">
+      <h2 class="section-title">상담 신청</h2>
+      <p class="lede">아래 내용을 채워주시면 이메일로 문의가 접수됩니다. 원하시는 차량은 링크·사진·글 어떤 형태든 좋고, 없으면 예산과 목적만 적어주셔도 됩니다.</p>
+      <form id="inquiry-form" novalidate>
+        <div class="row-2">
+          <div class="field">
+            <label for="name">이름 *</label>
+            <input id="name" name="name" type="text" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="contact">연락처 *</label>
+            <input id="contact" name="contact" type="text" placeholder="전화번호 또는 이메일" required>
+          </div>
+        </div>
+        <div class="field">
+          <label for="car">원하시는 차량 <span class="hint">(선택 — 링크, 차종, 연식 등 무엇이든)</span></label>
+          <input id="car" name="car" type="text" placeholder="예: encar.com/... 링크 / 그랜저 2022년식 / 아직 안 정함">
+        </div>
+        <div class="row-2">
+          <div class="field">
+            <label for="budget">예산 <span class="hint">(선택)</span></label>
+            <input id="budget" name="budget" type="text" placeholder="예: 월 40만원대 / 총 2,500만원 이하">
+          </div>
+          <div class="field">
+            <label for="purpose">용도 <span class="hint">(선택)</span></label>
+            <input id="purpose" name="purpose" type="text" placeholder="예: 개인용 / 법인·사업용">
+          </div>
+        </div>
+        <div class="field">
+          <label for="message">하고 싶은 말 <span class="hint">(선택)</span></label>
+          <textarea id="message" name="message" placeholder="편하게 상황을 적어주세요."></textarea>
+        </div>
+        <div class="form-foot">
+          <button type="submit" class="btn btn-primary">상담 요청 보내기</button>
+          <span id="status" role="status" aria-live="polite"></span>
+        </div>
+        <p class="form-note">전송 시 이메일 앱이 열리며, 보내기를 눌러야 실제로 접수됩니다.</p>
+      </form>
+    </section>
+
+    <footer>
+      <span class="brand">카브릿지</span>
+      <span>이메일로 바로 문의하시려면 <a href="mailto:koready716@gmail.com">koready716@gmail.com</a></span>
+      <span>카카오톡 채널 상담은 준비 중입니다.</span>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      var form = document.getElementById('inquiry-form');
+      var status = document.getElementById('status');
+
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        var name = form.name.value.trim();
+        var contact = form.contact.value.trim();
+
+        if (!name || !contact) {
+          status.textContent = '이름과 연락처는 꼭 입력해주세요.';
+          status.className = 'error';
+          return;
+        }
+
+        var lines = [
+          '이름: ' + name,
+          '연락처: ' + contact,
+          '원하시는 차량: ' + (form.car.value.trim() || '(미입력)'),
+          '예산: ' + (form.budget.value.trim() || '(미입력)'),
+          '용도: ' + (form.purpose.value.trim() || '(미입력)'),
+          '',
+          '하고 싶은 말:',
+          form.message.value.trim() || '(없음)'
+        ];
+
+        var subject = encodeURIComponent('[카브릿지 상담문의] ' + name);
+        var body = encodeURIComponent(lines.join('\n'));
+        var mailto = 'mailto:koready716@gmail.com?subject=' + subject + '&body=' + body;
+
+        status.textContent = '이메일 앱을 여는 중입니다...';
+        status.className = 'ok';
+        window.location.href = mailto;
+      });
+    })();
+  </script>
+</body>
+</html>
+
